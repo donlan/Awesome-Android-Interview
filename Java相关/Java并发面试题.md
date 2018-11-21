@@ -31,6 +31,8 @@ volatile 本质是在告诉jvm当前变量在寄存器（工作内存）中的�
 
 ConcurrentHashMap作为一种线程安全且高效的哈希表的决方案，尤其其中的"分段锁"的方案，相比HashTable的表锁在性能上的提升非常之大.
 
+[参考](http://www.importnew.com/28263.html)
+
 **5.volatile原理**
 
 在《Java并发编程：核心理论》一文中，我们已经提到可见性、有序性及原子性问题，通常情况下我们可以通过ynchronized关键字来解决这些个问题，不过如果对Synchonized原理有了解的话，应该知道Synchronized是一个较重量级的操作，对系统的性能有比较大的影响，所以如果有其他解决方案，我们通常都避免使用Synchronize来解决问题。
