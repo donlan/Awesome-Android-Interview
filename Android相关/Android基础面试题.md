@@ -806,16 +806,16 @@ RelativeLayout的子View如果高度和RelativeLayout不同，则会引发效率
 **116.Activity的生命周期，finish调用后其他生命周期还会走么？**
 
 **117.内存泄漏如何排查，MAT分析方法以及原理，各种泄漏的原因是什么比如Handler为什么会泄漏**
-
+[参考](https://blog.csdn.net/self_study/article/details/66969064)
 
 **118.view的绘制熟悉么，介绍下**
-
+[参考](https://www.jianshu.com/p/060b5f68da79)
 **119.anr是因为什么产生的，怎么排查**
-
+[参考一](https://juejin.im/entry/597026806fb9a06bcb7fc660)
 **120.界面上的话，有什么优化措施么？比如列表展示之类的，平时遇到过内存问题吗，怎么优化的？**
 
 **121.线程之间怎么通信的？**
-
+[参考](http://www.importnew.com/26850.html)
 
 **122.有没有做过 apk 多渠道打包；**
 
@@ -858,6 +858,36 @@ recycle方法是不可逆的，如果再次调用getPixels()等方法，则获�
 
 **120.手写一个简易的结合Retrofit + okhttp的网络请求的代码**
 
+```
+OkHttpClient client = new OkHttpClient.Builder()
+    .readTimeout(5,TimeUint.SECOND)
+    .writeTimeOut()
+    .connectTimeout()
+    .build()
+    
+ Retrofit retrofit = new Retrofit.Builder()
+    .baseUrl()
+    .client(client)
+    .addConverterFactory()
+    .build()
+    
+    
+interface UserApi{
+    @GET("/userinfo")
+    Call<T> getUserInfo(@Query("id")String id);
+}
+
+
+retrofit.craete(UserApi.class).getUserInfo("xxx")
+    .enqueue(new Callback<T>{
+        public void onResponse(Call<T> call,Response<T> response){
+        }
+        
+        public void onFailure(Call<T> call,Throwable t){
+        }
+    })
+```
+
 **121.JSON的结构？**
 
 json是一种轻量级的数据交换格式，
@@ -894,6 +924,7 @@ pull解析：同样基于事件驱动型,android 官方API提供,可随时终止
 4). 属性名必须与json串中属性名保持一致 （因为Gson解析json串底层用到了Java的反射原理）
 
 **125.了解 aar 文件没，有没有遇到什么坎；**
+[参考](https://blog.csdn.net/qq_32452623/article/details/79220522)
 
 **126.数据加载更多涉及到分页，你是怎么实现的；**
 
@@ -1001,17 +1032,34 @@ https://blog.csdn.net/javazejian/article/details/71860633
 
 **143.int,long的取值范围以及BigDecimal，数值越界了如何处理？**
 
+**判断服务端是否支持断点续传**
+
+Accept-Ranges : 用于服务器端到客户端的应答，客户端通过该字段可以判断服务器是否支持断点续传（注意RFC中注明了这一部分并不是必须的）。格式如下：
+
+
+Accept-Ranges: bytes  表示支持以bytes为单位进行传输。
+Accept-Ranges: none  表示不支持
+
+ 
+
+Content-Ranges : 用于服务器端到客户端的应答，与Accept-Ranges在同一个报文内，通过该字段指定了返回的文件资源的字节范围。格式如下：
+
+Content-Ranges: bytes 0-499/1234  大小为1234的文件的第0-499字节范围的内容
+Content-Ranges: bytes 734-1233/1234  大小为1234字节的文件的第734-结尾范围的内容
+
 **144.Android中如何查看一个对象的回收情况？**
 
 **145.ContentProvider、ContentResolver、ContentObserver 之间的关系。**
 
 **146.Android怎么加速启动Activity。**
-
+[参考](https://juejin.im/post/5874bff0128fe1006b443fa0)
 
 **147.invalidate和requestLayout的区别及使用。**
 
+
 **148.如何反编译，对代码逆向分析；**
 
+[参考](https://blog.csdn.net/fengyuzhengfan/article/details/80286704)
 
 
 **149.Intent传值有大小限制吗，为什么，如何处理；**
