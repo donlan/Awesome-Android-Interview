@@ -845,16 +845,19 @@ Service是安卓中系统的组件，它运行在独立进程的主线程中，�
 Service在不同Activity中可以获取自身实例，可以方便的对Service进行操作。Thread在不同的Activity中难以获取自身实例，如果Activity被销毁，Thread实例就很难再获取得到
 
 **129.Bitmap recycle**
-
+2.3前，存放在native memory，
 在安卓3.0以前Bitmap是存放在堆中的，我们只要回收堆内存即可
     
-在安卓3.0以后Bitmap是存放在内存中的，我们需要回收native层和Java层的内存
+在安卓3.0-7.1 Bitmap是存放在内存中的，我们需要回收native层和Java层的内存
+8.1后放在natice heap
     
 官方建议我们3.0以后使用recycle方法进行回收，该方法也可以不主动调用，因为垃圾回收器会自动收集不可用的Bitmap对象进行回收
     
 recycle方法会判断Bitmap在不可用的情况下，将发送指令到垃圾回收器，让其回收native层和Java层的内存，则Bitmap进入dead状态
     
 recycle方法是不可逆的，如果再次调用getPixels()等方法，则获取不到想要的结果
+
+[manager bitmap memory](https://developer.android.com/topic/performance/graphics/manage-memory)
 
 **120.手写一个简易的结合Retrofit + okhttp的网络请求的代码**
 
@@ -1068,15 +1071,55 @@ Content-Ranges: bytes 734-1233/1234  大小为1234字节的文件的第734-结�
 
 **152.双线程通过线程同步的方式打印12121212.......**
 
+```
+final Lock lock = new Lock();
+    new Thread(new Runnable(){
+        int count = 10;
+        @Override
+        public void run() {
+            while(count-->0){
+                synchronized(lock){
+                    System.out.print(1);
+                    lock.notify();
+                        try{
+                            lock.wait();
+                        }catch(Exception e){
 
+                        }
+                    
+                }
+            }
+        }
+    }).start();;
+    new Thread(new Runnable(){
+        int count = 10;
+        @Override
+        public void run() {
+            while(count-->0){
+                synchronized(lock){
+                    System.out.print(2);
+                    lock.notify();
+                        try{
+                            lock.wait();
+                        }catch(Exception e){
+
+                        }
+                }
+            }
+        }
+    }).start();;
+```
 
 **153.RemoteViews实现和使用场景**
 
+[参考](https://www.jianshu.com/p/23041852bd85)
 
 **154.对服务器众多错误码的处理（错误码有好几万个）**
 
 
 **155.adb常用命令行 **
+
+[参考](https://blog.csdn.net/Next_Second/article/details/73648754)
 
 **156.Android中跨进程通讯的几种方式**
 
