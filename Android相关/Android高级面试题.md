@@ -280,6 +280,7 @@ https://www.jianshu.com/p/376ea8a19a17
 
 Android 组件化的原理，还有一些组件化平时使用的问题；
 
+[组件化理解](https://www.jianshu.com/p/79e4df63f31f)
 
 对热修复和插件化的理解
 
